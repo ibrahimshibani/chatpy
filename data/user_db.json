@@ -1,0 +1,23 @@
+{
+    "1": {
+        "user_id": 1,
+        "name": "maxm",
+        "password": "password",
+        "role": "customer",
+        "status": "offline"
+    },
+    "2": {
+        "user_id": 2,
+        "name": "ibrahim",
+        "password": "password",
+        "role": "customer",
+        "status": "offline"
+    },
+    "3": {
+        "user_id": 3,
+        "name": "agent-x",
+        "password": "password",
+        "role": "agent",
+        "status": "offline"
+    }
+}
