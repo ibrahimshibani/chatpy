@@ -12,8 +12,18 @@ users = {}
 user_sessions = {}  # active chat sessions by session ID
 
 # helper functions to manipulate user database
-# load users from json db as user objects
 def load_users():
+    """
+    Load users from the user database and create User objects.
+
+    This function iterates over the values in the user_db dictionary and creates User objects for each user. The User objects are then stored in the users dictionary using the user_id as the key.
+
+    Parameters:
+    None
+
+    Returns:
+    None
+    """
     for user_data in user_db.values():
         user = User(
             user_id=user_data['user_id'],
@@ -22,17 +32,38 @@ def load_users():
             role=user_data['role']
         )
         users[user.user_id] = user
-load_users()
-# to be called after manipulating user objects to update json db
+
 def update_db():
+    """
+    Updates the user database by writing the contents of `user_db` to a JSON file.
+
+    Parameters:
+        None
+
+    Returns:
+        None
+    """
     with open('data/user_db.json', 'w') as f:
         json.dump(user_db, f)
 
-
+load_users()
 
 
 @app.route('/login', methods=['POST'])
 def login():
+    """
+    API endpoint for user login.
+    Parameters:
+    - username (str): The username of the user.
+    - password (str): The password of the user.
+    Returns:
+    - JSON response: A JSON response containing the following fields:
+        - message (str): A message indicating whether the login was successful.
+        - user_id (str): The ID of the logged-in user.
+        - role (str): The role of the logged-in user.
+        If the login is successful, the response status code will be 200.
+        If the username or password is invalid, the response status code will be 401.
+    """    
     data = request.json
     username = data.get('username')
     password = data.get('password')
@@ -49,6 +80,22 @@ def login():
 
 @app.route('/start_session', methods=['POST'])
 def start_session():
+    """
+    Starts a new chat session between a customer and an agent.
+    Endpoint: /start_session
+    Method: POST
+    Parameters:
+    - customer_id (str): The ID of the customer.
+    - agent_id (str): The ID of the agent.
+    Returns:
+    - If the customer and agent IDs are valid and their roles are 'customer' and 'agent' respectively, a JSON response with the following fields:
+        - success (str): A success message indicating that the session has started.
+        - session_id (str): The ID of the newly created chat session.
+        - status code 200.
+    - If the customer or agent ID is invalid or their roles are not 'customer' and 'agent' respectively, a JSON response with the following field:
+        - error (str): An error message indicating that the customer or agent ID is invalid.
+        - status code 400.
+    """
     data = request.json
     customer_id = data.get('customer_id')
     agent_id = data.get('agent_id')
@@ -67,7 +114,25 @@ def start_session():
         return jsonify({"error": "Invalid customer or agent ID"}), 400
 
 @app.route('/send_message', methods=['POST'])
+
 def send_message():
+    """
+    API endpoint for sending a message.
+    Parameters:
+    - session_id (str): The session ID for the chat instance.
+    - sender_id (str): The ID of the sender.
+    - receiver_id (str): The ID of the receiver.
+    - content (str): The content of the message.
+    Returns:
+    - JSON response:
+        - message_id (str): The ID of the sent message.
+        - sender (str): The name of the sender.
+        - receiver (str): The name of the receiver.
+        - content (str): The content of the message.
+        - timestamp (str): The timestamp of the message.
+    Raises:
+    - ValueError: If there is an error sending the message.
+    """    
     data = request.json
     session_id = data.get('session_id')
 
@@ -96,6 +161,16 @@ def send_message():
 
 @app.route('/get_messages/<string:session_id>', methods=['GET'])
 def get_messages(session_id):
+    """
+    Get messages for a given session ID.
+    Parameters:
+    - session_id (str): The ID of the session.
+    Returns:
+    - response (str): The chat history for the session.
+    - status_code (int): The HTTP status code of the response.
+    Raises:
+    - 404 (Not Found): If the session ID is not found.
+    """
     chat_instance = user_sessions.get(session_id)    
 
     if chat_instance:
@@ -109,6 +184,17 @@ def get_messages(session_id):
 
 @app.route('/get_free_agent', methods=['GET'])
 def is_any_agent_online():
+    """
+    API endpoint to check if any agent is online.
+
+    Returns:
+        - If an online agent is found:
+            - agent_id (int): The ID of the online agent.
+            - status (str): The status of the agent, which is "online".
+            - agent_name (str): The name of the online agent.
+        - If no online agents are found:
+            - message (str): A message indicating that no agents are online.
+    """    
     for user_id, user in user_db.items():
         if user['role'] == 'agent' and user['status'] == 'online':
             return jsonify({"agent_id": user_id, "status": "online", "agent_name": user["name"]}), 200
