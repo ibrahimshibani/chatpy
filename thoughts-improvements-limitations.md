@@ -16,7 +16,7 @@
 - Agents can log in via another console (this can be emulated via curl or postman) and respond to customer messages.
 
 ## Quick Win Solution
-The quick win solution is a basic implementation of a chat system that allows customers to send messages to customer service agents. This solution focuses on core functionality with minimal features to ensure quick deployment. There are still many major issues with this implementation, these points still need to be addressed for it to be considered a win or anywhere near deployment ready:
+The quick win solution is a basic implementation of a chat system that allows customers to send messages to customer service agents. This github repo is built only as a prototype for learning / poc purposes, it is definitely not ready for any type of prod. deployment. These points still need to be addressed for it to be considered a win or anywhere near deployment ready:
 
 1. **Authentication**: 
     - **Current State**: The authentication mechanism is non-existent, and all data is transmitted in clear text. session ids are predictably generated and can be used to mimic users.
