@@ -13,7 +13,7 @@
 ### Frontend Interaction
 - The frontend interacts with the backend via RESTful API endpoints.
 - Customers can log in, start a chat session, and send messages through a simple web interface.
-- Agents can log in and respond to customer messages.
+- Agents can log in via another console (this can be emulated via curl or postman) and respond to customer messages.
 
 ## Quick Win Solution
 The quick win solution is a basic implementation of a chat system that allows customers to send messages to customer service agents. This solution focuses on core functionality with minimal features to ensure quick deployment. There are still many major issues with this implementation, these points still need to be addressed for it to be considered a win or anywhere near deployment ready:
@@ -37,6 +37,10 @@ The quick win solution is a basic implementation of a chat system that allows cu
 5. **Frontend Technology**:
     - **Current State**: The current frontend is built using Streamlit, which is primarily designed for dashboarding and not for building interactive web applications.
     - **Improvements**: Develop a proper frontend using JavaScript or TypeScript with frameworks like React or Angular. 
+
+6. **More Robust Data Validation**:
+    - **Current State**: As the application grows in size, this means an increase in functionality and possible integrations (Mobile app, desktop app). The risk of unexpected input from users could cause unexpected errors and bad data eventually ending up in database system.
+    - **Improvements**: Utilize a tool like Pydantic (possible shifting to fastapi instead of flask as integrates more easily) which uses native python types like int or str.
  
 ## State-of-the-Art Improvements (Icing on top of the cake)
 
