@@ -9,5 +9,5 @@ class Message:
         self.timestamp = datetime.now()
 
     def __repr__(self):
-        return f'[{self.timestamp.strftime('%Y-%m-%d %H:%M:%S')}]     {self.sender}: {self.content}'
+        return f"[{self.timestamp.strftime('%Y-%m-%d %H:%M:%S')}]     {self.sender}: {self.content}"
 
