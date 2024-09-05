@@ -39,8 +39,8 @@ The quick win solution is a basic implementation of a chat system that allows cu
     - **Improvements**: Develop a proper frontend using JavaScript or TypeScript with frameworks like React or Angular. 
 
 6. **More Robust Data Validation**:
-    - **Current State**: As the application grows in size, this means an increase in functionality and possible integrations (Mobile app, desktop app). The risk of unexpected input from users could cause unexpected errors and bad data eventually ending up in database system.
-    - **Improvements**: Utilize a tool like Pydantic (possible shifting to fastapi instead of flask as integrates more easily) which uses native python types like int or str.
+    - **Current State**: As the application grows in size, this means an increase in functionality and possible integrations (Mobile app, desktop app). The risk of unexpected input from users could cause unexpected errors and bad data eventually ending up in database.
+    - **Improvements**: Utilize a tool like Pydantic (possible shifting to fastapi instead of flask as integrates more easily) which uses native python types like int or str to validate input to the system / database.
  
 ## State-of-the-Art Improvements (Icing on top of the cake)
 
